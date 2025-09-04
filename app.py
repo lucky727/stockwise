@@ -476,7 +476,7 @@ def view_issues():
 
     # Raw SQL query to fetch issued products for the current user
     query = text("""
-        SELECT i.id, p.Name AS product_name, i.quantity, i.unit, 
+        SELECT i.id, p."Name" AS product_name, i.quantity, i.unit, 
         i.from_meter, i.to_meter, i.serial_no
         FROM issue i
         JOIN product p ON i.product_id = p.id
@@ -501,7 +501,7 @@ def transactions():
 
     # Fetch Issued Transactions
     issued_sql = """
-        SELECT 'Issued' AS type, i.id, p.name AS product_name, 
+        SELECT 'Issued' AS type, i.id, p."Name" AS product_name, 
                i.quantity, i.unit, i.from_meter, i.to_meter, i.serial_no
         FROM issue i
         JOIN product p ON i.product_id = p.id
@@ -510,7 +510,7 @@ def transactions():
 
     # Fetch Returned Transactions
     returned_sql = """
-        SELECT 'Returned' AS type, r.id, p.name AS product_name, 
+        SELECT 'Returned' AS type, r.id, p."Name" AS product_name, 
         r.quantity, r.unit, r.from_meter, r.to_meter, r.serial_no
         FROM return_product r
         JOIN product p ON r.product_id = p.id
