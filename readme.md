@@ -3,6 +3,8 @@
 A Flask-based web application for **user authentication, employee management, and inventory management**.  
 Supports user sign-up, login, password reset with OTP, and an admin panel to manage products, issues, returns, and transactions.
 
+you can check and try yourself at https://stockwise-730h.onrender.com
+
 ---
 
 ## Features
