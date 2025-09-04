@@ -23,11 +23,19 @@ mail = Mail(app)
 
 
 #database connection and config
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:lucky727@localhost/flaskapp"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+import os
+
+url = "postgresql://stockwise_db_c8l7_user:6YZeinmkXSdcxZ6CXlYPCmG21C0cZI0t@dpg-d2sgt17diees738sb0ng-a/stockwise_db_c8l7"
+
+# if DATABASE_URL comes from environment, fix prefix if needed
+if url.startswith("postgres://"):
+    url = url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
 
 
 #model making / table in db
@@ -541,6 +549,6 @@ def employees():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000,debug = True)
+    app.run(host='0.0.0.0',debug = True)
     
     
