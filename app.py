@@ -467,25 +467,23 @@ def delete_product(id):
     return redirect(url_for("index"))
 
 
-@app.route("/view_issues", methods=['GET', 'POST'])
+@app.route("/view_issues", methods=['GET'])
 def view_issues():
     if "username" not in session:
         return redirect(url_for("login"))
-    
-    user_id = session.get("user_id")  # make sure you store user_id in session
 
-    # Raw SQL query to fetch issued products for the current user
-    query = text("""
-        SELECT i.id, p."Name" AS product_name, i.quantity, i.unit, 
-        i.from_meter, i.to_meter, i.serial_no
-        FROM issue i
-        JOIN product p ON i.product_id = p.id
-        WHERE i.user_id = :user_id
-    """)
+    user_id = session.get("user_id")
 
-    result = db.session.execute(query, {"user_id": user_id}).fetchall()
+    # ORM join: returns list of tuples (Issue, Product)
+    issues = (
+        db.session.query(Issue, Product)
+        .join(Product, Issue.product_id == Product.id)
+        .filter(Issue.user_id == user_id)
+        .all()
+    )
 
-    return render_template("view_issues.html", issues=result)
+    return render_template("view_issues.html", issues=issues)
+
 
 
 

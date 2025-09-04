@@ -8,35 +8,35 @@
   <div class="mb-4">
     <a href="{{ url_for('issuestocks') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Issue New Products</a>
   </div>
+<table class="table-auto w-full border-collapse rounded-lg overflow-hidden">
+  <thead>
+    <tr class="bg-blue-600 text-white text-left">
+      <th class="px-4 py-2">ID</th>
+      <th class="px-4 py-2">Product Name</th>
+      <th class="px-4 py-2">Category</th>
+      <th class="px-4 py-2">Quantity</th>
+      <th class="px-4 py-2">Unit</th>
+      <th class="px-4 py-2">From Meter</th>
+      <th class="px-4 py-2">To Meter</th>
+      <th class="px-4 py-2">Serial/Barcode</th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y divide-gray-200">
+    {% for issue, product in issues %}
+    <tr class="hover:bg-gray-100 transition">
+      <td class="px-4 py-2 font-medium text-gray-700">{{ issue.id }}</td>
+      <td class="px-4 py-2">{{ product.Name }}</td>
+      <td class="px-4 py-2">{{ product.Category }}</td>
+      <td class="px-4 py-2">{{ issue.quantity }}</td>
+      <td class="px-4 py-2">{{ issue.unit }}</td>
+      <td class="px-4 py-2">{{ issue.from_meter if issue.from_meter else '-' }}</td>
+      <td class="px-4 py-2">{{ issue.to_meter if issue.to_meter else '-' }}</td>
+      <td class="px-4 py-2">{{ issue.serial_no if issue.serial_no else '-' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-  <table class="table-auto w-full">
-    <thead>
-      <tr class="bg-blue-500 text-white">
-        <th class="px-4 py-2">ID</th>
-        <th class="px-4 py-2">Product Name</th>
-        <th class="px-4 py-2">Category</th>
-        <th class="px-4 py-2">Quantity</th>
-        <th class="px-4 py-2">Unit</th>
-        <th class="px-4 py-2">From Meter</th>
-        <th class="px-4 py-2">To Meter</th>
-        <th class="px-4 py-2">Serial/Barcode</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for issue, product in issues %}
-      <tr class="border-b hover:bg-gray-50">
-        <td class="px-4 py-2">{{ issue.id }}</td>
-        <td class="px-4 py-2">{{ product.Name }}</td>
-        <td class="px-4 py-2">{{ product.Category }}</td>
-        <td class="px-4 py-2">{{ issue.quantity }}</td>
-        <td class="px-4 py-2">{{ issue.unit }}</td>
-        <td class="px-4 py-2">{{ issue.from_meter if issue.from_meter else '-' }}</td>
-        <td class="px-4 py-2">{{ issue.to_meter if issue.to_meter else '-' }}</td>
-        <td class="px-4 py-2">{{ issue.serial_no if issue.serial_no else '-' }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
   
   {% if not issues %}
   <div class="text-center py-8 text-gray-500">
