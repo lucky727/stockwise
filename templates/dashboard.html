@@ -18,7 +18,7 @@
   {% for card in [
     {'title':'Network','img':'res/local-area.png','link':'#'},
     {'title':'Product','img':'res/delivery.png','link':url_for('add_product') },
-    {'title':'Employee','img':'res/team.png','link':'#'},
+    {'title':'Employee','img':'res/team.png','link':url_for('employees')},
     {'title':'Inventory Management','img':'res/inventory-management.png','link':url_for('IMS')}
   ] %}
   <a href="{{ card.link }}" class="group w-[260px] h-[280px]">

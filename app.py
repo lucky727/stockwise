@@ -26,7 +26,7 @@ mail = Mail(app)
 
 import os
 
-url = "postgresql://stockwise_db_c8l7_user:6YZeinmkXSdcxZ6CXlYPCmG21C0cZI0t@dpg-d2sgt17diees738sb0ng-a/stockwise_db_c8l7"
+url = "postgresql://stockwise_db_c8l7_user:6YZeinmkXSdcxZ6CXlYPCmG21C0cZI0t@dpg-d2sgt17diees738sb0ng-a.oregon-postgres.render.com/stockwise_db_c8l7"
 
 # if DATABASE_URL comes from environment, fix prefix if needed
 if url.startswith("postgres://"):
