@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Stock{% endblock title %}
+{% block content %}
+<div class="p-6">
+  <!-- Search Bar -->
+  <div class="mb-4 flex items-center gap-2">
+    <input id="searchInput" type="text" placeholder="Search products..."
+      class="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+    <button
+      class="flex items-center gap-1 bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-white hover:outline hover:outline-green-500 hover:text-green-500 transition duration-200">
+      <i class="ri-search-line"></i> Search
+    </button>
+  </div>
+
+  <!-- Product Table -->
+  <div class="overflow-x-auto border rounded-lg shadow-sm">
+    <table class="min-w-full text-left text-sm border-collapse">
+      <thead>
+        <tr class="bg-blue-800 text-white">
+          <th class="px-3 py-2"><i class="ri-hashtag"></i> S.no</th>
+          <th class="px-3 py-2"><i class="ri-box-3-line"></i> Product Name</th>
+          <th class="px-3 py-2"><i class="ri-apps-2-line"></i> Category</th>
+          <th class="px-3 py-2"><i class="ri-ruler-line"></i> Unit</th>
+          <th class="px-3 py-2"><i class="ri-stack-line"></i> Quantity</th>
+        </tr>
+      </thead>
+      <tbody id="productTable" class="divide-y divide-gray-200">
+        {% for item in items %}
+        <tr class="hover:bg-gray-50 capitalize">
+          <td class="px-3 py-2">{{ loop.index }}</td>
+          <td class="px-3 py-2">{{ item.Name }}</td>
+          <td class="px-3 py-2">{{ item.Category }}</td>
+          <td class="px-3 py-2">{{ item.unit }}</td>
+          <td class="px-3 py-2">{{ item.qty }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-3 py-2 text-center text-gray-500"><i class="ri-error-warning-line"></i> No products found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // Search filter
+  document.getElementById("searchInput").addEventListener("keyup", function () {
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#productTable tr");
+
+    rows.forEach(row => {
+      let text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
+  });
+</script>
+{% endblock content %}

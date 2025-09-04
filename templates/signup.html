@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}signup{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col md:flex-row">
+  <!-- Left Section with Background Image -->
+  <div class="w-full md:w-1/2 h-[300px] md:h-auto bg-cover bg-center relative" 
+       style="background-image: url('https://images.unsplash.com/photo-1592659762303-90081d34b277?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0');">
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- Text Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center p-6">
+      <h2 class="text-white text-4xl font-bold drop-shadow-lg">Join Us 🚀</h2>
+      <p class="text-gray-200 text-lg mt-4 max-w-md">
+        Create your account and start managing with ease
+      </p>
+    </div>
+  </div>
+
+  <!-- Right Section with Signup Form -->
+  <div class="w-full md:w-1/2 flex justify-center items-center bg-gray-50 p-6">
+    <form action="" method="post" class="w-full max-w-md">
+      <div class="bg-white w-full flex flex-col justify-center items-center gap-6 rounded-2xl shadow-lg p-8">
+        <p class="text-blue-600 font-bold text-2xl">Create a New Account</p>
+
+        <input type="text" name="username" id="username" placeholder="Username" 
+               class="p-3 w-full border rounded-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+        <input type="email" name="email" id="email" placeholder="Email" 
+               class="p-3 w-full border rounded-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+        <input type="password" name="password" id="password" placeholder="Password"  
+               class="p-3 w-full border rounded-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+        <input type="password" name="cpassword" id="cpassword" placeholder="Confirm Password"  
+               class="p-3 w-full border rounded-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+        <button type="submit" 
+                class="w-full rounded-full bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition font-semibold shadow-md">
+          Sign Up
+        </button>
+
+        <p class="text-gray-600 text-sm">
+          Already have an account? <a href="/login" class="text-blue-500 font-semibold hover:underline">Login</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

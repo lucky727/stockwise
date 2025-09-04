@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: flask_app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      # Flask / App Config
+      FLASK_ENV: production
+      SECRET_KEY: supersecretkey
+
+      # Database
+      SQLALCHEMY_DATABASE_URI: mysql+pymysql://root:lucky727@db/flaskapp
+
+      # Mail
+      MAIL_SERVER: smtp.gmail.com
+      MAIL_PORT: 587
+      MAIL_USERNAME: luckyvishwakarma758@gmail.com
+      MAIL_PASSWORD: kqaz epct fets oots
+      MAIL_USE_TLS: "true"
+      MAIL_USE_SSL: "false"
+
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: lucky727
+      MYSQL_DATABASE: flaskapp
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

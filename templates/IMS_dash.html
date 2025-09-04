@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block title %}IMS{% endblock title %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="relative bg-white py-20 px-6 md:px-20 min-h-screen flex items-center justify-center">
+
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+
+    <!-- ID Card -->
+    <div class="bg-white rounded-3xl shadow-xl w-[320px] overflow-hidden border border-gray-200">
+      <!-- Top strip -->
+      <div class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 h-14 flex items-center justify-center text-white font-extralight text-xl tracking-wide">
+        <a href="{{url_for('index')}}" class="hover:underline">Trial IMS</a>
+      </div>
+      <!-- Employee Photo -->
+      <div class="flex justify-center py-8">
+        <img 
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=764&auto=format&fit=crop" 
+          alt="Employee Photo" 
+          class="w-[140px] h-[180px] object-cover rounded-2xl shadow-md border border-gray-300"
+        />
+      </div>
+      <!-- Employee Details -->
+      <div class="px-8 pb-8 text-gray-900 font-light space-y-2 text-center">
+        <p class="text-lg">Name: <span class="font-semibold">{{ session['username'] }}</span></p>
+        <p class="text-lg">Email: <span class="font-semibold">{{ session['email'] }}</span></p>
+        <p class="text-lg">Employee ID: <span class="font-semibold">{{session['user_id']}}</span></p>
+      </div>
+      <!-- Bottom strip -->
+      <div class="h-4 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900"></div>
+    </div>
+
+    <!-- Text Section -->
+    <div class="max-w-xl text-gray-900 font-light">
+      <h1 class="text-5xl font-extralight mb-6 leading-tight tracking-wide">Welcome to Trial IMS, <span class="font-semibold">{{ session['username'] }}</span></h1>
+      <p class="text-xl mb-10 leading-relaxed max-w-lg">
+        Manage your inventory seamlessly with our easy-to-use Inventory Management System. 
+        Track issued products, return stocks, and keep a close eye on transactions with just a few clicks.
+      </p>
+      <a href="#optionscontainer" 
+         class="inline-block px-8 py-4 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-white rounded-3xl shadow-lg hover:brightness-110 transition font-semibold tracking-wide">
+        Get Started
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Options Section -->
+<div class="flex justify-center mt-24">
+  <p class="text-4xl font-extralight text-gray-900 tracking-wide">Quick Actions</p>
+</div>
+
+<div id="optionscontainer" class="mt-12 w-full flex justify-center px-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl">
+
+    <!-- Issue Stocks -->
+    <a href="{{url_for('issuestocks')}}" 
+       class="flex items-center justify-center w-[280px] h-[140px] bg-white border border-green-300 rounded-3xl shadow-md hover:shadow-xl transition group">
+      <p class="text-green-600 font-semibold text-2xl group-hover:underline tracking-wide">Issue Stocks</p>
+    </a>
+
+    <!-- Return Stocks -->
+    <a href="{{url_for('returnstocks')}}" 
+       class="flex items-center justify-center w-[280px] h-[140px] bg-white border border-red-300 rounded-3xl shadow-md hover:shadow-xl transition group">
+      <p class="text-red-600 font-semibold text-2xl group-hover:underline tracking-wide">Return Stocks</p>
+    </a>
+
+    <!-- View Stock -->
+    <a href="{{url_for('stocks')}}" 
+       class="flex items-center justify-center w-[280px] h-[140px] bg-white border border-blue-300 rounded-3xl shadow-md hover:shadow-xl transition group">
+      <p class="text-blue-600 font-semibold text-2xl group-hover:underline tracking-wide">View Stock</p>
+    </a>
+
+    <!-- Transactions -->
+    <a href="{{url_for('transactions')}}" 
+       class="flex items-center justify-center w-[280px] h-[140px] bg-white border border-yellow-300 rounded-3xl shadow-md hover:shadow-xl transition group">
+      <p class="text-yellow-600 font-semibold text-2xl group-hover:underline tracking-wide">Transactions</p>
+    </a>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}

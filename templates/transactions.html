@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="p-6">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">My Transactions</h1>
+
+  <!-- 🔍 Search + Filter Controls -->
+  <div class="mb-4 flex flex-col md:flex-row gap-3 md:items-center justify-between">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search transactions..." 
+      class="w-full md:w-1/3 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+    >
+    <select 
+      id="filterType" 
+      class="w-full md:w-40 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+    >
+      <option value="">All Types</option>
+      <option value="Issued">Issued</option>
+      <option value="Returned">Returned</option>
+    </select>
+  </div>
+
+  {% if transactions %}
+  <div class="overflow-x-auto bg-white shadow-md rounded-2xl">
+    <table id="transactionsTable" class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-100 text-gray-700 text-sm uppercase tracking-wide cursor-pointer">
+          <th class="px-4 py-3" onclick="sortTable(0)">#</th>
+          <th class="px-4 py-3" onclick="sortTable(1)">Type</th>
+          <th class="px-4 py-3" onclick="sortTable(2)">Product</th>
+          <th class="px-4 py-3" onclick="sortTable(3)">Quantity</th>
+          <th class="px-4 py-3" onclick="sortTable(4)">Unit</th>
+          <th class="px-4 py-3" onclick="sortTable(5)">From Meter</th>
+          <th class="px-4 py-3" onclick="sortTable(6)">To Meter</th>
+          <th class="px-4 py-3" onclick="sortTable(7)">Serial No</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {% for t in transactions %}
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-3 text-gray-600">{{ loop.index }}</td>
+          <td class="px-4 py-3">
+            <span class="px-2 py-1 rounded-full text-xs font-semibold
+              {% if t.type == 'Issued' %}
+                bg-blue-100 text-blue-700
+              {% else %}
+                bg-green-100 text-green-700
+              {% endif %}
+            ">
+              {{ t.type }}
+            </span>
+          </td>
+          <td class="px-4 py-3">{{ t.product_name }}</td>
+          <td class="px-4 py-3">{{ t.quantity }}</td>
+          <td class="px-4 py-3">{{ t.unit }}</td>
+          <td class="px-4 py-3">{{ t.from_meter or '-' }}</td>
+          <td class="px-4 py-3">{{ t.to_meter or '-' }}</td>
+          <td class="px-4 py-3">{{ t.serial_no or '-' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p class="text-gray-500 italic">No transactions found.</p>
+  {% endif %}
+</div>
+
+<!-- 📜 Table Script -->
+<script>
+  const searchInput = document.getElementById("searchInput");
+  const filterType = document.getElementById("filterType");
+  const table = document.getElementById("transactionsTable").getElementsByTagName("tbody")[0];
+
+  // 🔍 Search + Filter
+  function filterTable() {
+    const searchValue = searchInput.value.toLowerCase();
+    const filterValue = filterType.value.toLowerCase();
+
+    for (let row of table.rows) {
+      const rowText = row.innerText.toLowerCase();
+      const typeText = row.cells[1].innerText.toLowerCase();
+
+      const matchesSearch = rowText.includes(searchValue);
+      const matchesFilter = !filterValue || typeText === filterValue;
+
+      row.style.display = matchesSearch && matchesFilter ? "" : "none";
+    }
+  }
+
+  searchInput.addEventListener("input", filterTable);
+  filterType.addEventListener("change", filterTable);
+
+  // ↕ Sort function
+  let sortDirection = true;
+  function sortTable(colIndex) {
+    const rows = Array.from(table.rows);
+    rows.sort((a, b) => {
+      let aText = a.cells[colIndex].innerText.trim();
+      let bText = b.cells[colIndex].innerText.trim();
+
+      // Try numeric sort
+      let aNum = parseFloat(aText);
+      let bNum = parseFloat(bText);
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        return sortDirection ? aNum - bNum : bNum - aNum;
+      }
+      return sortDirection ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    });
+    rows.forEach(r => table.appendChild(r));
+    sortDirection = !sortDirection;
+  }
+</script>
+{% endblock %}

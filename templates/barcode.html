@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block title %}scan{% endblock title %}
+{% block content %}
+
+  <h2>Issue Product Form</h2>
+  
+  <!-- Input field with scan button -->
+  <label>Product Barcode:</label>
+       <h1> {{session ['role']}}</h1>
+  <input type="text" id="barcodeInput" placeholder="Enter or scan barcode">
+  <button class="btn btn-scan" onclick="openScanner()">Scan</button>
+
+  <!-- Scanner Modal -->
+  <div class="scanner-modal" id="scannerModal">
+
+    <div class="scanner-box">
+      <h3>Scan Barcode</h3>
+      <div id="scanner-container"></div>
+      <p>Detected: <span id="detectedCode">-</span></p>
+      <button class="btn btn-confirm" onclick="confirmCode()">Confirm</button>
+      <button class="btn btn-cancel" onclick="closeScanner()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- QuaggaJS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  <script>
+    let lastDetected = null;
+
+    // Open scanner modal
+    function openScanner() {
+      document.getElementById("scannerModal").style.display = "flex";
+      lastDetected = null;
+      document.getElementById("detectedCode").textContent = "-";
+
+      // Init Quagga
+      Quagga.init({
+        inputStream: {
+          type: "LiveStream",
+          target: document.querySelector('#scanner-container'),
+          constraints: { facingMode: "environment" }
+        },
+        decoder: {
+          readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
+        }
+      }, function(err) {
+        if (err) { console.error(err); return; }
+        Quagga.start();
+      });
+
+      // Detect barcode
+      Quagga.onDetected(function(data) {
+        if (!lastDetected) { // first detected only
+          lastDetected = data.codeResult.code;
+          document.getElementById("detectedCode").textContent = lastDetected;
+        }
+      });
+    }
+
+    // Confirm code and fill input
+    function confirmCode() {
+      if (lastDetected) {
+        document.getElementById("barcodeInput").value = lastDetected;
+      }
+      closeScanner();
+    }
+
+    // Close scanner
+    function closeScanner() {
+      Quagga.stop();
+      document.getElementById("scannerModal").style.display = "none";
+    }
+  </script>
+ 
+  {% endblock content %}

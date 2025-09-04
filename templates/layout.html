@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}My Flask App{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    /* Apple style font and nav */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: #fff;
+      color: #1d1d1f;
+    }
+    nav a {
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #0071e3; /* Apple blue */
+    }
+    /* Hamburger animation */
+    .hamburger-line {
+      transition: all 0.3s ease;
+    }
+    .hamburger-open .line1 {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger-open .line2 {
+      opacity: 0;
+    }
+    .hamburger-open .line3 {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    /* Mobile menu slide */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    #mobile-menu.open {
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-50">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16">
+    <!-- Left: Hamburger (mobile) -->
+    <button id="menu-button" aria-label="Toggle menu" class="md:hidden flex flex-col justify-center items-center gap-1 w-8 h-8 focus:outline-none">
+      <span class="hamburger-line line1 block w-6 h-0.5 bg-gray-900 rounded"></span>
+      <span class="hamburger-line line2 block w-6 h-0.5 bg-gray-900 rounded"></span>
+      <span class="hamburger-line line3 block w-6 h-0.5 bg-gray-900 rounded"></span>
+    </button>
+
+    <!-- Center: Logo -->
+    <div class="flex-1 flex justify-center md:justify-start">
+      <a href="{{ url_for('index') }}" class="text-2xl font-semibold tracking-tight text-gray-900 hover:text-blue-600 flex items-center gap-1">
+        <i class="ri-fire-fill text-blue-600 text-3xl"></i>
+        <span>StockWise</span>
+      </a>
+    </div>
+
+    <!-- Right: Desktop nav links -->
+    <div class="hidden md:flex items-center space-x-8 text-gray-900 font-medium">
+      <a href="{{ url_for('index') }}" class="hover:text-blue-600">Home</a>
+      {% if 'username' in session %}
+        <a href="{{ url_for('dashboard') }}" class="hover:text-blue-600">Dashboard</a>
+        <a href="{{ url_for('IMS') }}" class="hover:text-blue-600">IMS</a>
+        <a href="{{ url_for('issuestocks') }}" class="hover:text-blue-600">Issue</a>
+        <a href="{{ url_for('returnstocks') }}" class="hover:text-blue-600">Return</a>
+        <a href="{{ url_for('stocks') }}" class="hover:text-blue-600">Stock</a>
+        <a href="{{ url_for('transactions') }}" class="hover:text-blue-600">Transactions</a>
+        <a href="{{ url_for('logout') }}" class="text-red-600 hover:text-red-800 font-semibold">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="hover:text-blue-600">Login</a>
+        <a href="{{ url_for('signup') }}" class="hover:text-blue-600 font-semibold">Signup</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-200">
+    <div class="flex flex-col px-6 py-4 space-y-4 text-gray-900 font-medium">
+      <a href="{{ url_for('index') }}" class="hover:text-blue-600">Home</a>
+      {% if 'username' in session %}
+        <a href="{{ url_for('dashboard') }}" class="hover:text-blue-600">Dashboard</a>
+        <a href="{{ url_for('IMS') }}" class="hover:text-blue-600">IMS</a>
+        <a href="{{ url_for('issuestocks') }}" class="hover:text-blue-600">Issue</a>
+        <a href="{{ url_for('returnstocks') }}" class="hover:text-blue-600">Return</a>
+        <a href="{{ url_for('stocks') }}" class="hover:text-blue-600">Stock</a>
+        <a href="{{ url_for('transactions') }}" class="hover:text-blue-600">Transactions</a>
+        <a href="{{ url_for('logout') }}" class="text-red-600 hover:text-red-800 font-semibold">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="hover:text-blue-600">Login</a>
+        <a href="{{ url_for('signup') }}" class="hover:text-blue-600 font-semibold">Signup</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Push content down so nav doesn't cover -->
+<div class="pt-16">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="max-w-7xl mx-auto px-6 md:px-12 mt-6 space-y-4">
+        {% for category, message in messages %}
+          <div class="p-4 rounded-md {% if category == 'error' %}bg-red-100 text-red-700 border border-red-400{% else %}bg-green-100 text-green-700 border border-green-400{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+
+<script>
+  const menuButton = document.getElementById('menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuButton.addEventListener('click', () => {
+    menuButton.classList.toggle('hamburger-open');
+    mobileMenu.classList.toggle('open');
+  });
+</script>
+{% include "footer.html" %}
+</body>
+</html>

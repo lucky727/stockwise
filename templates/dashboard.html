@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="w-full text-center py-3 bg-green-50 text-green-700 font-medium">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- Cards Section -->
+<div class="bg-gray-50 mt-10 w-full min-h-[400px] flex flex-wrap justify-center gap-8 px-6">
+  {% for card in [
+    {'title':'Network','img':'res/local-area.png','link':'#'},
+    {'title':'Product','img':'res/delivery.png','link':url_for('add_product') },
+    {'title':'Employee','img':'res/team.png','link':'#'},
+    {'title':'Inventory Management','img':'res/inventory-management.png','link':url_for('IMS')}
+  ] %}
+  <a href="{{ card.link }}" class="group w-[260px] h-[280px]">
+    <div class="flex flex-col items-center justify-between h-full p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-lg transition">
+      
+      <!-- Image -->
+      <div class="flex items-center justify-center w-full h-[70%]">
+        <img src="{{ url_for('static', filename=card.img) }}" alt="{{ card.title }}" class="w-[60%] h-[60%] object-contain group-hover:scale-105 transition">
+      </div>
+      
+      <!-- Title -->
+      <p class="mt-4 text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition">
+        {{ card.title }}
+      </p>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+
+{% endblock content %}

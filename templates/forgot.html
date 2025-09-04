@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}reset password{% endblock title %}
+{% block content %}
+
+
+<div class="w-max-screen m-10 h-[500px] bg-gray-100 mt-10 flex justify-center items-center">
+    
+    <form action="" method="post">
+        <div class= "bg-white h-96 w-150 flex justify-center flex-col items-center gap-6 rounded-2xl shadow-md">
+            <p class="text-blue-500 font-semibold text-2xl">Reset password </p>
+           
+            <input type="email" name="email" id="email" placeholder="Email" class="p-3 border-2 rounded-full border-blue-500 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 focus:border-none">
+
+            <button type="submit" class="rounded-full bg-blue-500 text-white px-5 py-2 hover:text-blue-500 hover:bg-white hover:border">send otp</button>
+            <p>Go to --> <span class="text-blue-500 font-semibold"><a href="/signup">Signup</a></span></p>
+        </div>
+    </form>
+    
+</div>
+
+{% endblock content %}

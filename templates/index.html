@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-32 flex flex-col md:flex-row items-center md:items-start gap-12">
+    <!-- Text -->
+    <div class="md:w-1/2 text-center md:text-left">
+      <h1 class="text-5xl md:text-7xl font-semibold tracking-tight mb-6 leading-tight text-gray-900">
+        Inventory Management System
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-lg mx-auto md:mx-0">
+        Streamline your stock, track assets, and optimize your workflow.
+      </p>
+      <a href="{{ url_for('dashboard') }}" class="inline-block text-blue-600 font-semibold hover:underline text-lg">
+        Get Started &gt;
+      </a>
+      <a href="{{ url_for('issuestocks') }}" class="inline-block ml-8 text-blue-600 font-semibold hover:underline text-lg">
+        Issue Products &gt;
+      </a>
+    </div>
+    <!-- Image -->
+    <div class="md:w-1/2">
+      <img src="{{ url_for('static', filename='res/dashboard1.jpg') }}" alt="Inventory Dashboard" class="w-full max-w-lg mx-auto rounded-xl shadow-lg" />
+    </div>
+  </div>
+</section>
+
+<!-- Section: Real-time Tracking -->
+<section class="bg-white border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+    <!-- Image -->
+    <div class="md:w-1/2 order-2 md:order-1">
+      <img src="{{ url_for('static', filename='res/dash2.png') }}" alt="Real-time Tracking" class="w-full max-w-lg mx-auto rounded-xl shadow-lg" />
+    </div>
+    <!-- Text -->
+    <div class="md:w-1/2 order-1 md:order-2 text-center md:text-left">
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight mb-6 leading-tight text-gray-900">
+        Real-time Stock Tracking
+      </h2>
+      <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-md mx-auto md:mx-0">
+        Monitor your inventory levels live and avoid stockouts or overstocking.
+      </p>
+      <a href="{{ url_for('stocks') }}" class="inline-block text-blue-600 font-semibold hover:underline text-lg">
+        Learn more &gt;
+      </a>
+      <a href="{{ url_for('issuestocks') }}" class="inline-block ml-8 text-blue-600 font-semibold hover:underline text-lg">
+        Manage Stock &gt;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Section: User & Role Management -->
+<section class="bg-gray-50 border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+    <!-- Text -->
+    <div class="md:w-1/2 text-center md:text-left">
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight mb-6 leading-tight text-gray-900">
+        User & Role Management
+      </h2>
+      <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-md mx-auto md:mx-0">
+        Assign roles, track user activity, and control access securely.
+      </p>
+      <a href="{{ url_for('dashboard') }}" class="inline-block text-blue-600 font-semibold hover:underline text-lg">
+        Learn more &gt;
+      </a>
+      <a href="{{ url_for('signup') }}" class="inline-block ml-8 text-blue-600 font-semibold hover:underline text-lg">
+        Add Users &gt;
+      </a>
+    </div>
+    <!-- Image -->
+    <div class="md:w-1/2">
+      <img src="{{ url_for('static', filename='res/role.jpeg') }}" alt="User  Management" class="w-full max-w-lg mx-auto rounded-xl shadow-lg" />
+    </div>
+  </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="bg-white border-t border-gray-200 py-16 text-center">
+  <h3 class="text-3xl font-semibold mb-6 text-gray-900">Ready to optimize your inventory?</h3>
+  <a href="{{ url_for('signup') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-8 py-4 transition-shadow shadow-md hover:shadow-lg">
+    Get Started Today
+  </a>
+</section>
+
+{% endblock content %}
